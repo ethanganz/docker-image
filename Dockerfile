@@ -1,31 +1,24 @@
 FROM ubuntu:22.04
 
-# Prevent interactive prompts during install
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update and upgrade system
-RUN apt update && apt upgrade -y
+RUN apt update && apt upgrade -y && \
+    apt install -y curl gnupg2 ca-certificates lsb-release
 
-# Install base packages
-RUN apt install -y python3 python3-pip python3-venv git curl pciutils lshw nodejs npm nano
+# Add NodeSource repository and install Node.js 18
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Install Node.js 18.x from official NodeSource
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+# Continue with your other installs
+RUN apt install -y python3 python3-pip python3-venv git pciutils lshw nano
 
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
-# Create a workspace directory
 WORKDIR /workspace
 
-# Optional: make ollama user part of video group (GPU access)
 RUN usermod -aG video ollama || true
 
-# Set default shell to bash
 SHELL ["/bin/bash", "-c"]
 
-# This ensures containers keep running if no command is passed
 CMD ["bash"]
-
-
