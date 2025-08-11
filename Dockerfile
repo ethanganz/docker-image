@@ -9,6 +9,10 @@ RUN apt update && apt upgrade -y
 # Install base packages
 RUN apt install -y python3 python3-pip python3-venv git curl pciutils lshw nodejs npm nano
 
+# Install Node.js 18.x from official NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
@@ -23,4 +27,5 @@ SHELL ["/bin/bash", "-c"]
 
 # This ensures containers keep running if no command is passed
 CMD ["bash"]
+
 
