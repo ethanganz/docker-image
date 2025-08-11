@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt upgrade -y
 
 # Install base packages
-RUN apt install -y python3 python3-pip git curl pciutils lshw nodejs npm nano
+RUN apt install -y python3 python3-pip python3-venv git curl pciutils lshw nodejs npm nano
 
 # Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
@@ -23,3 +23,4 @@ SHELL ["/bin/bash", "-c"]
 
 # This ensures containers keep running if no command is passed
 CMD ["bash"]
+
