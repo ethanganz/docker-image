@@ -30,10 +30,11 @@ cd /workspace
 
 if [ ! -d chatbot-v0.1 ]; then
     echo "Cloning chatbot repo..."
-    git clone https://gitlab.com/corerok/airlink/ai-chatbot/chatbot-v0.1.git
+    git clone https://oauth2:${GITLAB_TOKEN}@gitlab.com/corerok/airlink/ai-chatbot/chatbot-v0.1.git
 else
     echo "Repo already exists, skipping clone."
 fi
+
 
 ### -------- POSTGRES --------
 echo "Starting PostgreSQL..."
