@@ -35,7 +35,7 @@ su - postgres -c "psql -c \"CREATE DATABASE chatbot_db;\""
 
 ### -------- BACKEND --------
 echo "Setting up backend..."
-cd /app/chatbot-v0.1/backend
+cd /workspace/chatbot-v0.1/backend
 python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
@@ -45,11 +45,11 @@ cat <<EOT > .env
 DATABASE_URL=postgresql://postgres:password@localhost:4600/chatbot_db
 EOT
 
-uvicorn main:app --host 0.0.0.0 --port 3000 &
+uvicorn main:workspace --host 0.0.0.0 --port 3000 &
 
 ### -------- FRONTEND --------
 echo "Building frontend..."
-cd /app/chatbot-v0.1/frontend
+cd /workspace/chatbot-v0.1/frontend
 npm install
 npm run build
 
@@ -58,7 +58,7 @@ python3 -m http.server 4000 &
 
 ### -------- VLLM --------
 echo "Starting vLLM..."
-cd /app
+cd /workspace
 python3 -m venv vllm-venv
 source vllm-venv/bin/activate
 
