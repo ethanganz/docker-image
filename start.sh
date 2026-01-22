@@ -30,10 +30,8 @@ echo "Starting PostgreSQL..."
 service postgresql start
 sed -i "s/#port = 5432/port = 4600/" /etc/postgresql/*/main/postgresql.conf
 service postgresql restart
-sudo -u postgres psql <<EOF
-ALTER USER postgres PASSWORD 'password';
-CREATE DATABASE chatbot_db;
-EOF
+su - postgres -c "psql -c \"ALTER USER postgres PASSWORD 'password';\""
+su - postgres -c "psql -c \"CREATE DATABASE chatbot_db;\""
 
 ### -------- BACKEND --------
 echo "Setting up backend..."
