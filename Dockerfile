@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 
 RUN apt update && apt upgrade -y && \
-    apt install -y curl gnupg2 ca-certificates lsb-release python3 python3-pip python3-venv git pciutils lshw nano lsof
+    apt install -y curl gnupg2 ca-certificates lsb-release python3 python3-pip python3-venv git pciutils lshw nano lsof postgresql postgresql-contrib
 
 # Setup Node via nvm in a single layer
 ENV NVM_DIR=/root/.nvm
@@ -20,5 +20,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
 ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
 
 WORKDIR /workspace
+
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"]
 
 CMD ["bash"]
