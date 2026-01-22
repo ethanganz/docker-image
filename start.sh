@@ -25,6 +25,16 @@ if ! command -v pip3 &> /dev/null; then
     rm /tmp/get-pip.py
 fi
 
+# ------------------ Workspace & Repo ------------------
+cd /workspace
+
+if [ ! -d chatbot-v0.1 ]; then
+    echo "Cloning chatbot repo..."
+    git clone https://gitlab.com/corerok/airlink/ai-chatbot/chatbot-v0.1.git
+else
+    echo "Repo already exists, skipping clone."
+fi
+
 ### -------- POSTGRES --------
 echo "Starting PostgreSQL..."
 service postgresql start
