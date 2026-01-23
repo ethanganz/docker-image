@@ -52,8 +52,15 @@ source venv/bin/activate
 # Upgrade pip + wheel
 pip install --upgrade pip wheel
 
-pip install torch sentence-transformers transformers faiss-cpu --no-cache-dir
+pip uninstall -y torch torchvision torchaudio || true
+
+pip install \
+  --index-url https://download.pytorch.org/whl/cpu \
+  torch torchvision torchaudio
+
+pip install sentence-transformers transformers faiss-cpu --no-cache-dir
 pip install -r requirements.txt -v --no-cache-dir
+
 
 cat <<EOT > .env
 DATABASE_URL=postgresql://postgres:password@localhost:4600/chatbot_db
