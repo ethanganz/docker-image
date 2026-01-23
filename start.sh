@@ -49,8 +49,12 @@ echo "Setting up backend..."
 cd /workspace/chatbot-v0.1/backend
 python3 -m venv venv
 source venv/bin/activate
+# Upgrade pip + wheel
 pip install --upgrade pip wheel
-pip install --no-cache-dir -r requirements.txt
+
+pip install torch sentence-transformers transformers faiss-cpu --no-cache-dir
+pip install -r requirements.txt -v --no-cache-dir
+
 cat <<EOT > .env
 DATABASE_URL=postgresql://postgres:password@localhost:4600/chatbot_db
 EOT
