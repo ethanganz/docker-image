@@ -52,15 +52,10 @@ source venv/bin/activate
 # Upgrade pip + wheel
 pip install --upgrade pip wheel
 
-pip uninstall -y torch torchvision torchaudio || true
+pip install torch torchvision torchaudio \
+  --index-url https://download.pytorch.org/whl/cpu
 
-pip install \
-  --index-url https://download.pytorch.org/whl/cpu \
-  torch torchvision torchaudio
-
-pip install sentence-transformers transformers faiss-cpu --no-cache-dir
-pip install -r requirements.txt -v --no-cache-dir
-
+pip install -r requirements.txt --no-cache-dir
 
 cat <<EOT > .env
 DATABASE_URL=postgresql://postgres:password@localhost:4600/chatbot_db
@@ -70,6 +65,11 @@ uvicorn main:workspace --host 0.0.0.0 --port 3000 &
 
 ### -------- FRONTEND --------
 echo "Building frontend..."
+export NVM_DIR="/root/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+node -v
+npm -v
+
 cd /workspace/chatbot-v0.1/frontend
 npm install
 npm run build
